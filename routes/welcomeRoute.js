@@ -5,4 +5,4 @@ welcomeRoute.get('/', (req, res) => {
   res.send('Welcome to 8devices inventory managament system');
 });
 
-export { welcomeRoute };
+export default welcomeRoute;
