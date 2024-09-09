@@ -1,7 +1,8 @@
 import express from 'express';
-import configureApp from './config/config.js'; // General app configuration
-import sequelize from './config/dbConfig.js'; // Database configuration
-import welcomeRoute from './routes/welcomeRoute.js'; // Import routes
+import configureApp from './config/config.js';
+import sequelize from './config/dbConfig.js';
+import welcomeRoute from './routes/welcomeRoute.js';
+import inventoryRoutes from './routes/inventoryRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ configureApp(app);
 
 // Setup routes
 app.use('/', welcomeRoute);
+app.use('/api/', inventoryRoutes);
 
 // Test the DB connection
 sequelize

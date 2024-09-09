@@ -1,4 +1,5 @@
 import sequelize from '../config/dbConfig.js';
+// @ts-ignore
 import InventoryItem from '../models/InventoryItem.js';
 
 const createTable = async () => {
