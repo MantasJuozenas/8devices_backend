@@ -16,29 +16,34 @@ const InventoryItem = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    shelf: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     itemCode: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     weight: {
       type: DataTypes.FLOAT,
-      allowNull: true,
+      allowNull: false,
     },
     size: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+    },
+    ShelfId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
-    schema: 'INV',
-    tableName: 'InventoryItem',
     timestamps: true,
+    schema: 'INV',
   }
 );
+
+InventoryItem.associate = (models) => {
+  InventoryItem.belongsTo(models.Shelf, {
+    foreignKey: 'ShelfId',
+    onDelete: 'CASCADE',
+  });
+};
 
 export default InventoryItem;

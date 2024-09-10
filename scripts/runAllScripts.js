@@ -19,6 +19,7 @@ const runScript = async (script) => {
 const runAll = async () => {
   await runScript('node scripts/createSchema.js');
   await runScript('node scripts/createDatabase.js');
+  await runScript('node scripts/createShelfTable.js');
   await runScript('node scripts/createItemTable.js');
 };
 
