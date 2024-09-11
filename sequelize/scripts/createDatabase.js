@@ -22,6 +22,7 @@ const databaseExists = async (databaseName) => {
     await checkDB.close();
     return true;
   } catch (error) {
+    console.log(error);
     return false;
   }
 };

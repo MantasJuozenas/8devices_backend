@@ -1,4 +1,4 @@
-import sequelize from '../config/dbConfig.js'; // Adjust the path to your config file
+import sequelize from '../models/index.js'; // Adjust the path to your config file
 import dotenv from 'dotenv';
 
 dotenv.config();

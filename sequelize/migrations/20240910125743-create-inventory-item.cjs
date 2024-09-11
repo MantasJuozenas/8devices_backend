@@ -2,7 +2,6 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Create the 'InventoryItem' table
     await queryInterface.createTable(
       'InventoryItem',
       {
@@ -57,15 +56,14 @@ module.exports = {
         },
       },
       {
-        schema: 'INV', // Using schema 'INV'
+        schema: 'INV',
       }
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    // Drop the 'InventoryItem' table when rolling back
+  async down(queryInterface) {
     await queryInterface.dropTable('InventoryItem', {
-      schema: 'INV', // Drop table in schema 'INV'
+      schema: 'INV',
     });
   },
 };

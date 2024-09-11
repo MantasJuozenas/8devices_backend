@@ -3,14 +3,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Create the table with timestamps
     await queryInterface.createTable(
-      'Shelf',
+      'inventoryType',
       {
         id: {
           type: Sequelize.INTEGER,
-          primaryKey: true,
           autoIncrement: true,
+          primaryKey: true,
           allowNull: false,
         },
         name: {
@@ -35,9 +34,8 @@ module.exports = {
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    // Drop the table
-    await queryInterface.dropTable('Shelf', {
+  async down(queryInterface) {
+    await queryInterface.dropTable('inventoryType', {
       schema: 'INV',
     });
   },

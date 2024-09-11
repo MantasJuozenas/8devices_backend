@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
-import shelfRouter from '../routes/shelfRoutes.js';
-import { Shelf, InventoryItem } from '../models/shelfInventoryAssertion.js';
+import shelfRouter from '../express/routes/shelfRoutes.js';
+import { models } from '../sequelize/models/index.js';
 
 const app = express();
 app.use(express.json());
@@ -9,8 +9,8 @@ app.use('/api', shelfRouter);
 
 describe('Shelf Routes', () => {
   afterAll(async () => {
-    await InventoryItem.destroy({ where: {} });
-    await Shelf.destroy({ where: {} });
+    await models.InventoryItem.destroy({ where: {} });
+    await models.Shelf.destroy({ where: {} });
   });
 
   test('should create a new shelf', async () => {
@@ -29,8 +29,8 @@ describe('Shelf Routes', () => {
   });
 
   test('should get all shelves', async () => {
-    await Shelf.create({ name: 'Shelf 1' });
-    await Shelf.create({ name: 'Shelf 2' });
+    await models.Shelf.create({ name: 'Shelf 1' });
+    await models.Shelf.create({ name: 'Shelf 2' });
 
     const response = await request(app).get('/api/shelves');
     expect(response.status).toBe(200);
@@ -39,10 +39,10 @@ describe('Shelf Routes', () => {
   });
 
   test('should get all items grouped by shelf name', async () => {
-    const shelf1 = await Shelf.create({ name: 'Shelf A' });
-    const shelf2 = await Shelf.create({ name: 'Shelf B' });
+    const shelf1 = await models.Shelf.create({ name: 'Shelf A' });
+    const shelf2 = await models.Shelf.create({ name: 'Shelf B' });
 
-    await InventoryItem.create({
+    await models.InventoryItem.create({
       ShelfId: shelf1.id,
       name: 'Item 1',
       manufacturer: 'Manufacturer A',
@@ -52,7 +52,7 @@ describe('Shelf Routes', () => {
       size: 'S',
     });
 
-    await InventoryItem.create({
+    await models.InventoryItem.create({
       ShelfId: shelf1.id,
       name: 'Item 2',
       manufacturer: 'Manufacturer B',
@@ -62,7 +62,7 @@ describe('Shelf Routes', () => {
       size: 'M',
     });
 
-    await InventoryItem.create({
+    await models.InventoryItem.create({
       ShelfId: shelf2.id,
       name: 'Item 3',
       manufacturer: 'Manufacturer C',

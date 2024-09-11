@@ -18,6 +18,9 @@ export default [
         expect: 'readonly',
       },
     },
+    rules: {
+      'no-unused-vars': 'error',
+    },
   },
   pluginJs.configs.recommended,
 ];

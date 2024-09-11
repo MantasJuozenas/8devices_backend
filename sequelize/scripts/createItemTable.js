@@ -1,14 +1,12 @@
-import sequelize from '../config/dbConfig.js';
-// eslint-disable-next-line no-unused-vars
-import Shelf from '../models/shelf.js';
+import sequelize from '../models/index.js';
 
-const createShelfTable = async () => {
+const createTable = async () => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
 
     await sequelize.sync({ alter: true });
-    console.log('Table "Shelf" created successfully.');
+    console.log('Table "InventoryItem" created successfully in schema "INV".');
   } catch (error) {
     console.error('Unable to create the table:', error);
   } finally {
@@ -16,4 +14,4 @@ const createShelfTable = async () => {
   }
 };
 
-createShelfTable();
+createTable();

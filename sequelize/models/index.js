@@ -1,11 +1,14 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+import Shelf from './Shelf.js';
+import InventoryItem from './InventoryItem.js';
+import InventoryType from './inventoryType.js';
+import InventoryItemTypes from './inventoryItemTypes.js';
 
 dotenv.config();
 
 const environment = process.env.NODE_ENV || 'development';
 
-// Define configurations for different environments
 const config = {
   development: {
     username: process.env.DB_USER,
@@ -33,10 +36,6 @@ const config = {
   },
 };
 
-// Log environment and config for debugging
-console.log(`Environment: ${environment}`);
-console.log(`Config: ${JSON.stringify(config[environment], null, 2)}`);
-
 const dbConfig = config[environment];
 
 if (!dbConfig) {
@@ -48,5 +47,21 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
   dialect: dbConfig.dialect,
   port: dbConfig.port,
 });
+
+const models = {
+  Shelf: Shelf(sequelize),
+  InventoryItem: InventoryItem(sequelize),
+  InventoryType: InventoryType(sequelize),
+  InventoryItemTypes: InventoryItemTypes(sequelize),
+};
+
+// Define associations
+Object.keys(models).forEach((modelName) => {
+  if (models[modelName].associate) {
+    models[modelName].associate(models);
+  }
+});
+
+export { models };
 
 export default sequelize;
