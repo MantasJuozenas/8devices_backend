@@ -1,15 +1,20 @@
 import express from 'express';
-import configureApp from './config/config.js';
+import configureApp from './config/configExpress.js';
 import sequelize from './config/dbConfig.js';
 import welcomeRoute from './routes/welcomeRoute.js';
 import inventoryRoutes from './routes/inventoryRoutes.js';
 import shelfRoutes from './routes/shelfRoutes.js';
+import InventoryItem from './models/InventoryItem.js';
+import Shelf from './models/shelf.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Apply general application configuration
 configureApp(app);
+
+Shelf.associate({ InventoryItem });
+InventoryItem.associate({ Shelf });
 
 // Setup routes
 app.use('/', welcomeRoute);

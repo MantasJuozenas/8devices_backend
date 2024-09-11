@@ -13,6 +13,7 @@ const Shelf = sequelize.define(
   {
     timestamps: true,
     schema: 'INV',
+    tableName: 'Shelf',
   }
 );
 

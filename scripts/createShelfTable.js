@@ -1,5 +1,5 @@
 import sequelize from '../config/dbConfig.js';
-// @ts-ignore
+// eslint-disable-next-line no-unused-vars
 import Shelf from '../models/shelf.js';
 
 const createShelfTable = async () => {

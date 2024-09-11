@@ -36,6 +36,7 @@ const InventoryItem = sequelize.define(
   {
     timestamps: true,
     schema: 'INV',
+    tableName: 'InventoryItem',
   }
 );
 

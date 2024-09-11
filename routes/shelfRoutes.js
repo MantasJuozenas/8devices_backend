@@ -1,5 +1,6 @@
 import express from 'express';
-import { InventoryItem, Shelf } from '../models/shelfInventoryAssertion.js';
+import InventoryItem from '../models/InventoryItem.js';
+import Shelf from '../models/shelf.js';
 
 const router = express.Router();
 
@@ -23,6 +24,17 @@ router.post('/shelves', async (req, res) => {
   }
 });
 
+// Route to get all shelves
+router.get('/shelves', async (req, res) => {
+  try {
+    const shelves = await Shelf.findAll();
+    res.status(200).json(shelves);
+  } catch (error) {
+    console.error('Error fetching shelves:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Route to get all items grouped by shelf name
 router.get('/shelves/grouped-by-shelf', async (req, res) => {
   try {
@@ -30,28 +42,31 @@ router.get('/shelves/grouped-by-shelf', async (req, res) => {
       include: [
         {
           model: Shelf,
-          as: 'Shelf',
           attributes: ['name'],
         },
       ],
     });
 
     const groupedItems = items.reduce((acc, item) => {
+      const { id, name, manufacturer, count, itemCode, weight, size, createdAt, updatedAt } = item;
       const shelfName = item.Shelf ? item.Shelf.name : 'Unassigned';
+
       if (!acc[shelfName]) {
         acc[shelfName] = [];
       }
+
       acc[shelfName].push({
-        id: item.id,
-        name: item.name,
-        manufacturer: item.manufacturer,
-        count: item.count,
-        itemCode: item.itemCode,
-        weight: item.weight,
-        size: item.size,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
+        id,
+        name,
+        manufacturer,
+        count,
+        itemCode,
+        weight,
+        size,
+        createdAt,
+        updatedAt,
       });
+
       return acc;
     }, {});
 
@@ -60,11 +75,11 @@ router.get('/shelves/grouped-by-shelf', async (req, res) => {
       items,
     }));
 
+    // Send the response
     res.status(200).json(result);
   } catch (error) {
-    console.error('Error fetching grouped items:', error);
+    console.error('Error fetching grouped items:', error); // Print the full error
     res.status(500).json({ error: error.message });
   }
 });
-
 export default router;

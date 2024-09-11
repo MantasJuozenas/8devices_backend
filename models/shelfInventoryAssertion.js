@@ -1,4 +1,4 @@
-import sequelize from '../config/dbConfig.js';
+//@ts-ignore
 import Shelf from './Shelf.js';
 import InventoryItem from './InventoryItem.js';
 
